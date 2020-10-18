@@ -1,0 +1,13 @@
+requests
+blinker
+Flask
+marshmallow
+Flask-Classful
+Flask-SQLAlchemy
+SQLAlchemy-Utils
+SQLAlchemy
+marshmallow-sqlalchemy
+mysqlclient
+
+mcrcon
+mcstatus
