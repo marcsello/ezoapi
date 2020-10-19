@@ -20,7 +20,7 @@ class BackupsView(FlaskView):
         list_of_files = glob.glob(current_app.config["BACKUPS_FOLDER"])
 
         if not list_of_files:
-            abort(404)
+            abort(404, "Backups folder empty")
 
         latest_file = max(list_of_files, key=os.path.getctime)
         return jsonify(latest_file)

@@ -13,7 +13,7 @@ class PlayerdataView(FlaskView):
     decorators = [apikey_required(False)]
 
     def index(self):
-        statement = text("""SELECT DISTINCT `supp`.`playername`, `supp`.`time`, `supp`.`type` 
+        statement = text("""SELECT DISTINCT `supp`.`playername`, `supp`.`time`, `supp`.`type` = 'join' AS online 
             FROM (SELECT `playername`, MAX(`time`) AS `time` 
                   FROM `playerlogger` 
                   WHERE `type` IN ('join', 'quit') 
@@ -24,6 +24,9 @@ class PlayerdataView(FlaskView):
             WHERE `supp`.`type` IN ('join', 'quit') 
             ORDER BY `time` DESC;""")
 
-        result = db.engine.execute(statement)
+        result = [
+            {"name": ply["playername"], "time": ply["time"], "online": bool(ply["online"])}
+            for ply in db.engine.execute(statement)
+        ]
 
         return jsonify(result)
