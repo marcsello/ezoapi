@@ -15,7 +15,7 @@ from utils import register_all_error_handlers
 # import views
 from views import AuthmeView, BackupsView, PlayerdataView, StatusView
 
-SENTRY_DSN = os.environ.get("EZOTV_SENTRY_DSN")
+SENTRY_DSN = os.environ.get("SENTRY_DSN")
 if SENTRY_DSN:
     sentry_sdk.init(
         dsn=SENTRY_DSN,
