@@ -14,7 +14,7 @@ class BackupsView(FlaskView):
 
     def index(self):
         list_of_files = glob.glob(os.path.join(current_app.config["BACKUPS_FOLDER"], "*.tar.gz"))
-        return jsonify(os.path.basename(fname) for fname in list_of_files)  # empty lists handled by python properly
+        return jsonify([os.path.basename(fname) for fname in list_of_files])  # empty lists handled by python properly
 
     @route("$latest")
     def get_latest(self):
