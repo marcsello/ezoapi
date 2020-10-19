@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 import os
+
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+
 from flask import Flask
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -10,6 +14,14 @@ from utils import register_all_error_handlers
 
 # import views
 from views import AuthmeView, BackupsView, PlayerdataView, StatusView
+
+SENTRY_DSN = os.environ.get("EZOTV_SENTRY_DSN")
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[FlaskIntegration()],
+        send_default_pii=True
+    )
 
 # create flask app
 app = Flask(__name__)
