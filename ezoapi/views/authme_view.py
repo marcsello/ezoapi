@@ -38,6 +38,19 @@ class AuthmeView(FlaskView):
         db.session.commit()
         return '', 204
 
+    def patch(self, _id: int):  # update one
+        a = Authme.query.get_or_404(_id)
+
+        try:
+            a = self.authme_schema.load(request.json, partial=True, instance=a)
+        except ValidationError as e:
+            abort(400, str(e))
+
+        db.session.add(a)
+        db.session.commit()
+
+        return jsonify(self.authme_schema.dump(a))
+
     def post(self):
 
         try:
