@@ -31,7 +31,9 @@ class AuthmeView(FlaskView):
             with MCRcon(current_app.config["RCON_HOST"], current_app.config["RCON_PASSWORD"]) as mcr:
                 current_app.logger.debug(f"Kicking {a.username}...")
                 current_app.logger.debug(
-                    "MC RCON: " + mcr.command(f"kick {a.username} Az EZO.TV regisztrációd megszűnt!"))
+                    "MC RCON: " +
+                    mcr.command(f"kick {a.username} Az EZO.TV regisztrációd megszűnt!")
+                )
 
             db.session.delete(a)
 
@@ -41,10 +43,36 @@ class AuthmeView(FlaskView):
     def patch(self, _id: int):  # update one
         a = Authme.query.get_or_404(_id)
 
+        old_username = a.username
+        old_isLogged = a.isLogged
+
         try:
             a = self.authme_schema.load(request.json, partial=True, instance=a)
         except ValidationError as e:
             abort(400, str(e))
+
+        if a.username != old_username:
+            with MCRcon(current_app.config["RCON_HOST"], current_app.config["RCON_PASSWORD"]) as mcr:
+                current_app.logger.debug(f"Kicking {old_username}...")
+                current_app.logger.debug(
+                    "MC RCON: " +
+                    mcr.command(
+                        f"kick {old_username} A regisztrációdhoz tartozó felhasználónév megváltozott! Lépj be újra kérlek."
+                    )
+                )
+            a.isLogged = 0
+            a.hasSession = 0
+
+        if a.isLogged != old_isLogged:
+            with MCRcon(current_app.config["RCON_HOST"], current_app.config["RCON_PASSWORD"]) as mcr:
+                # Old username will be the same as current if it's not changed
+                current_app.logger.debug(f"Logging out {old_username}...")
+                current_app.logger.debug(
+                    "MC RCON: " +
+                    mcr.command(f"kick {old_username} Ki lettél jelentkeztetve! Lépj be újra kérlek.")
+                )
+            if not a.isLogged:
+                a.hasSession = 0
 
         db.session.add(a)
         db.session.commit()
@@ -69,7 +97,10 @@ class AuthmeView(FlaskView):
 
         with MCRcon(current_app.config["RCON_HOST"], current_app.config["RCON_PASSWORD"]) as mcr:
             current_app.logger.debug(f"Kicking {a.username}...")
-            current_app.logger.debug("MC RCON: " + mcr.command(f"kick {a.username} Az EZO.TV regisztrációd megszűnt!"))
+            current_app.logger.debug(
+                "MC RCON: " +
+                mcr.command(f"kick {a.username} Az EZO.TV regisztrációd megszűnt!")
+            )
 
         db.session.delete(a)
         db.session.commit()
