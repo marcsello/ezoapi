@@ -14,7 +14,7 @@ from model import db
 from utils import register_all_error_handlers
 
 # import views
-from views import AuthmeView, BackupsView, PlayerdataView, StatusView
+from views import AuthmeView, BackupsView, PlayerdataView, StatusView, MaprenderView
 
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
 if SENTRY_DSN:
@@ -49,7 +49,7 @@ db.init_app(app)
 register_all_error_handlers(app)
 
 # register views
-for view in [AuthmeView, BackupsView, PlayerdataView, StatusView]:
+for view in [AuthmeView, BackupsView, PlayerdataView, StatusView, MaprenderView]:
     view.register(app, trailing_slash=False)
 
 # start debuggig if needed
