@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-from flask import jsonify, current_app, abort
+from flask import jsonify
 from flask_classful import FlaskView
-from mcstatus import MinecraftServer
+from datetime import datetime
+import tzlocal
 from sqlalchemy import text
 
 from utils import apikey_required
@@ -25,7 +26,11 @@ class PlayerdataView(FlaskView):
             ORDER BY `time` DESC;""")
 
         result = [
-            {"name": ply["playername"], "last_seen": ply["time"], "online": bool(ply["online"])}
+            {
+                "name": ply["playername"],
+                # Converts to given timezone automagically
+                "last_seen": datetime.fromtimestamp(ply["time"], tz=tzlocal.get_localzone()),
+                "online": bool(ply["online"])}
             for ply in db.engine.execute(statement)
         ]
 

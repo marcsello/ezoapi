@@ -9,6 +9,7 @@ SQLAlchemy
 marshmallow-sqlalchemy
 mysqlclient
 
+tzlocal
 mcrcon
 mcstatus
 sentry_sdk
