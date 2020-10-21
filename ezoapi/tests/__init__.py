@@ -6,3 +6,4 @@ os.environ['BACKUPS_FOLDER'] = "asdasdasd"
 os.environ['RCON_HOST'] = "127.0.0.1"
 os.environ['RCON_PASSWORD'] = "asdasdasdasdasd"
 os.environ['QUERY_ADDRESS'] = "127.0.0.1"
+os.environ['MAPRENDER_STATUS_URL'] = 'file:///asd/asdasd.txt'

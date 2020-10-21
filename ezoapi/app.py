@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from urllib.parse import urlparse
 
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
@@ -34,6 +35,7 @@ app.config['BACKUPS_FOLDER'] = os.environ['BACKUPS_FOLDER']
 app.config['RCON_HOST'] = os.environ['RCON_HOST']
 app.config['RCON_PASSWORD'] = os.environ['RCON_PASSWORD']
 app.config['QUERY_ADDRESS'] = os.environ['QUERY_ADDRESS']
+app.config['MAPRENDER_STATUS_URL'] = urlparse(os.environ['MAPRENDER_STATUS_URL'])
 
 # important stuff
 app.secret_key = os.environ.get('SECRET_KEY', os.urandom(12))
