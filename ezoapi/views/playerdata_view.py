@@ -25,7 +25,7 @@ class PlayerdataView(FlaskView):
             ORDER BY `time` DESC;""")
 
         result = [
-            {"name": ply["playername"], "time": ply["time"], "online": bool(ply["online"])}
+            {"name": ply["playername"], "last_seen": ply["time"], "online": bool(ply["online"])}
             for ply in db.engine.execute(statement)
         ]
 
