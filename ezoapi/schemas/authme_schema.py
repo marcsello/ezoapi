@@ -13,7 +13,12 @@ class AuthmeSchema(ModelSchema):
 
     @validates_schema(skip_on_field_errors=True)
     def validate_name(self, data, **kwargs):
-        if data['username'] != data['realname'].lower():
+        # Szóval itt most trükközünk
+        # Partial validationnál nem tudhatjuk mindkettő értéket (vagy egyet vagy egyiket se kapjuk)
+        # Az alábbi kondíció az pedig nem dob validációs hibát, ha mindkettő hiányzik
+        # Illetve akkor se, ha mindkettő meg van adva (de jól)
+        # Viszont ha csak az egyik, akkor be fog szólni
+        if data.get('username', '') != data.get('realname', '').lower():
             raise ValidationError(
                 'Username should be a lowercase version of real name', 'username'
             )
