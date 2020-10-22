@@ -12,7 +12,7 @@ class AuthmeSchema(ModelSchema):
     email = fields.Str(validate=Email())
 
     @validates_schema(skip_on_field_errors=True)
-    def validate_name(self, data):
+    def validate_name(self, data, **kwargs):
         if data['username'] != data['realname'].lower():
             raise ValidationError(
                 'Username should be a lowercase version of real name', 'username'
