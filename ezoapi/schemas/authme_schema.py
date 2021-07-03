@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-from marshmallow_sqlalchemy import ModelSchema
+from marshmallow_sqlalchemy import SQLAlchemySchema
 from marshmallow import fields, validates_schema, ValidationError
 from marshmallow.validate import Length, Regexp, Email
 from model import Authme
 
 
-class AuthmeSchema(ModelSchema):
+class AuthmeSchema(SQLAlchemySchema):
     username = fields.Str(required=True, validate=[Length(min=3, max=16), Regexp("^[a-z0-9_]*$")])
     realname = fields.Str(required=True, validate=[Length(min=3, max=16), Regexp("^[A-Za-z0-9_]*$")])
 
