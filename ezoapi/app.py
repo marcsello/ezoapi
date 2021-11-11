@@ -11,7 +11,7 @@ from model import db
 from utils import register_all_error_handlers
 
 # import views
-from views import AuthmeView, BackupsView, PlayerdataView, StatusView, MaprenderView
+from views import AuthmeView, BackupsView, PlayerdataView, StatusView, MaprenderView, AliveView
 
 from config import Config
 
@@ -35,7 +35,7 @@ db.init_app(app)
 register_all_error_handlers(app)
 
 # register views
-for view in [AuthmeView, BackupsView, PlayerdataView, StatusView, MaprenderView]:
+for view in [AuthmeView, BackupsView, PlayerdataView, StatusView, MaprenderView, AliveView]:
     view.register(app, trailing_slash=False)
 
 # start debugging if needed
