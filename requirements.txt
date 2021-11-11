@@ -1,7 +1,7 @@
-requests~=2.25.1
+requests==2.26.0
 blinker~=1.4
 Flask~=2.0.1
-marshmallow~=3.12.1
+marshmallow==3.14.0
 Flask-Classful~=0.14.2
 Flask-SQLAlchemy~=2.5.1
 SQLAlchemy-Utils~=0.37.8
@@ -9,7 +9,7 @@ SQLAlchemy~=1.4.20
 marshmallow-sqlalchemy~=0.26.1
 mysqlclient~=2.0.3
 
-tzlocal~=2.1
-mcrcon~=0.6.0
-mcstatus~=6.1.2
-sentry_sdk~=1.1.0
+tzlocal==4.1
+mcrcon==0.7.0
+mcstatus==6.5.0
+sentry_sdk~=1.4.3
